@@ -2,29 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "./src/main.ts",
+      "src": "dist/main.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    "/:path#*"]
-],
-"rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.js" 
+      "src": "/(.*)",
+      "dest": "/dist/main.js"
     }
-  ],
-"http": {
-    "headers": [
-      {
-        "source": "/(.*)",
-        "destination": "$1",
-        "secure": false
-      }
-    ]
-  },
-"env": [
-    {"name": "PORT", "value": "3000"}
   ]
 }
