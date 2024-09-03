@@ -15,22 +15,22 @@ export class PortfolioService {
 
   constructor(private readonly stockService: StockService) {}
 
-  calculateProfit(startDate: Date, endDate: Date): number {
-    const startValue = this.getPortfolioValue(startDate);
-    const endValue = this.getPortfolioValue(endDate);
+  calculateProfit(): number {
+    const startValue = this.getPortfolioValue();
+    const endValue = this.getPortfolioValue();
     return endValue - startValue;
   }
 
-  private getPortfolioValue(date: Date): number {
+  private getPortfolioValue(): number {
     return this.stocks.reduce((acc, stock) => {
-      const price = this.stockService.getPrice(stock.name, date);
+      const price = this.stockService.getPrice();
       return acc + price * stock.quantity;
     }, 0);
   }
 
   calculateAnnualizedReturn(startDate: Date, endDate: Date): number {
-    const profit = this.calculateProfit(startDate, endDate);
-    const startValue = this.getPortfolioValue(startDate);
+    const profit = this.calculateProfit();
+    const startValue = this.getPortfolioValue();
     const timeDiff =
       (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24 * 365);
     return profit / startValue / timeDiff;

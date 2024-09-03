@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { StockService } from './stock.service';
 
 @Module({
-  providers: [StockService]
+  exports: [StockService],
+  providers: [StockService],
 })
 export class StockModule {}
