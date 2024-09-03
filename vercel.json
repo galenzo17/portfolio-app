@@ -2,14 +2,29 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/main.js",
-      "use": "@vercel/node"
+      "src": "./src/main.ts",
+      "use": "@vercel/node" // Utiliza el plugin @vercel/node para proyectos basados en NestJS y Express
     }
   ],
   "routes": [
+    "/:path#*"] // Asegúrate de que todas las rutas sean reescritas a la raíz del servidor.
+],
+"rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/dist/main.js"
-    }
+      "source": "/(.*)",
+      "destination": "/index.js" 
+    } // Ruta personalizada para redirigir todo a 'index.js' en el directorio de producción si eso es lo que se genera con NestJS al compilar. Asegúrate de utilizar la ruta adecuada según tu estructura del proyecto y cómo estás llamando a las rutas desde `main.ts`.
+  ],
+"http": {
+    "headers": [ // Si necesitas establecer encabezados específicos, como CSRF tokens para tus peticiones POST:
+      {
+        "source": "/(.*)",
+        "destination": "$1",
+        "secure": false
+      }
+    ]
+  },
+"env": [ // Añade cualquier configuración de entorno o variables necesarias.
+    {"name": "PORT", "value": "3000"}
   ]
 }
